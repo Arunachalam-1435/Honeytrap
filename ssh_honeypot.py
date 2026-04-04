@@ -3,6 +3,12 @@ import logging
 from logging.handlers import RotatingFileHandler
 import socket
 import paramiko
+from paramiko.common import (
+    OPEN_SUCCEEDED,
+    OPEN_FAILED_ADMINISTRATIVELY_PROHIBITED,
+    AUTH_SUCCESSFUL,
+    AUTH_FAILED
+)
 import threading
 
 #constants
@@ -66,19 +72,18 @@ class Server(paramiko.ServerInterface):
         self.password = password 
     def check_channel_request(self, kind: str, chanid: int) -> int: 
         if kind == 'session': 
-            return paramiko.OPEN_SUCCEEDED 
-        return paramiko.OPEN_FAILED_ADMINISTRATIVELY_PROHIBITED
+            return paramiko.OPEN_SUCCEEDED #type: ignore
+        return paramiko.OPEN_FAILED_ADMINISTRATIVELY_PROHIBITED #type: ignore
     def get_allowed_auth(self): 
         return "password" 
     def check_auth_password(self, username, password): 
         logger.info(f"Client {self.client_ip} attempted connection with username: {username} and password: {password}")
-        creds_logger.info(f"{self.client_ip}, {username}, {password}")
         if self.username is not None and self.password is not None: 
             if username == self.username and password == self.password: 
-                return paramiko.AUTH_SUCCESSFUL 
-            else: return paramiko.AUTH_FAILED 
+                return paramiko.AUTH_SUCCESSFUL #type: ignore
+            else: return paramiko.AUTH_FAILED #type: ignore
         else: 
-            return paramiko.AUTH_SUCCESSFUL 
+            return paramiko.AUTH_SUCCESSFUL #type: ignore
     def check_channel_shell_request(self, channel): 
         self.event.set() 
         return True 
@@ -107,7 +112,7 @@ def client_handle(client, address, username, password):
             print("Client never asked for a shell.") 
             return
         standard_banner = "Welcome to Ubuntu 22.04 LTS!\r\n\r\n" 
-        channel.send(standard_banner) 
+        channel.send(standard_banner.encode()) 
         
         shell_emulator(channel, client_ip=client_ip) 
     except Exception as error: 
@@ -135,4 +140,5 @@ def honeypot(address, port, username, password):
             ssh_honeypot_thread.start() 
         except Exception as error: 
             print(error)
-honeypot('127.0.0.1', 2222, 'username', 'password')
+if __name__ == "__main__":
+    honeypot('127.0.0.1', 2222, 'username', 'password')

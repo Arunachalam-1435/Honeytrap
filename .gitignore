@@ -1,1 +1,3 @@
 my_venv/*
+.env/*
+server.key

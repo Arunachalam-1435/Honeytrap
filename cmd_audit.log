@@ -1,4 +1,0 @@
-127.0.0.1, username, password
-command b'echo "Hello"' executed by 127.0.0.1
-command b'ls' executed by 127.0.0.1
-command b'rm sys.conf' executed by 127.0.0.1

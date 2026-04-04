@@ -1,3 +1,4 @@
 my_venv/*
 .env/*
 server.key
+__pycache__/*

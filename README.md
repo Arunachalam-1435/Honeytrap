@@ -88,6 +88,5 @@ docker run -p 2222:2222 -p 8080:8080 -d honeytrap
 
 ## 📎 References
 This honeypot was inspired by a tutorial by **Grant Collins**:  
-https://youtu.be/tyKyLhcKgNo?si=hk3t_qMToANCXryA
+<iframe width="560" height="315" src="https://www.youtube.com/embed/gDjDxS55890?si=EJeqcdHpU3Lw91ii" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 The Docker setup was independently designed to simplify deployment.
-

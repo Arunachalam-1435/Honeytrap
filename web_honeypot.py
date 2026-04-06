@@ -29,7 +29,7 @@ def web_honeypot(inp_username="admin", inp_password="password"):
 
 def run_web_honeypot(port=8000, inp_username="admin", inp_password="password"):
     app = web_honeypot(inp_username, inp_password)
-    app.run(debug=True, port=port, host="0.0.0.0")
+    app.run(debug=False, port=port, host="0.0.0.0")
     return app
 if __name__ == "__main__":
     run_web_honeypot()

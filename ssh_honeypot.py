@@ -103,7 +103,7 @@ def client_handle(client, address, username, password):
         transport.add_server_key(host_key) 
         transport.start_server(server=server) 
         
-        channel = transport.accept(10)
+        channel = transport.accept(100)
         if channel is None: 
             print("No channel was opened.") 
             return
@@ -132,13 +132,20 @@ def honeypot(address, port, username, password):
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) 
     sock.bind((address, port)) 
     sock.listen(10) 
-    print(f"SSH server is listening on port: {port}.") 
-    while True: 
-        try: 
-            client, addr = sock.accept() 
-            ssh_honeypot_thread = threading.Thread(target=client_handle, args=(client, addr, username, password))
-            ssh_honeypot_thread.start() 
-        except Exception as error: 
-            print(error)
+    print(f"SSH server is listening on port: {port}.")
+    try:
+        while True: 
+            try: 
+                client, addr = sock.accept() 
+                ssh_honeypot_thread = threading.Thread(target=client_handle, args=(client, addr, username, password),daemon=True)
+                ssh_honeypot_thread.start() 
+            except Exception as e:
+                print(e)
+                continue
+    except KeyboardInterrupt: 
+            print("\n CTRL+C detected. Shutting down SSH honeypot...")
+    finally:
+            sock.close()
+            print("Socket closed. Exit clean.")
 if __name__ == "__main__":
     honeypot('127.0.0.1', 2222, 'username', 'password')

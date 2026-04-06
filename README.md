@@ -54,8 +54,9 @@ docker build -t honeytrap .
 ```
 ### Run container
 ```bash
-docker run -p 2222:2222 -p 8080:8080 -d honeytrap
+docker run -p 2222:2222 -p 8080:8080 -v ./logs/:/app/logs -d honeytrap
 ```
+It will stores the logs in this repository's logs directory. You can view it and analyze it.
 ## 💡 Usage
 
 ### 🏳️ `HoneyTrap` Flags

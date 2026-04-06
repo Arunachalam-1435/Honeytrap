@@ -5,7 +5,7 @@ from flask import Flask, render_template, request, url_for
 logging_format = logging.Formatter('%(asctime)s %(message)s')
 logger = logging.getLogger("HTTPLogger")
 logger.setLevel(logging.INFO)
-handler = RotatingFileHandler('http_audit.log',maxBytes=2000, backupCount=5)
+handler = RotatingFileHandler('logs/http_audit.log',maxBytes=2000, backupCount=5)
 handler.setFormatter(logging_format)
 logger.addHandler(handler)
 

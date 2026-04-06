@@ -19,13 +19,13 @@ host_key = paramiko.RSAKey(filename='server.key')
 #loggers
 logger = logging.getLogger("FunnelLogger")
 logger.setLevel(logging.INFO)
-handler = RotatingFileHandler('audit.log',maxBytes=2000, backupCount=5)
+handler = RotatingFileHandler('logs/audit.log',maxBytes=2000, backupCount=5)
 handler.setFormatter(format)
 logger.addHandler(handler)
 
 creds_logger = logging.getLogger("CredsLogger")
 creds_logger.setLevel(logging.INFO)
-creds_handler = RotatingFileHandler('cmd_audit.log',maxBytes=2000, backupCount=5)
+creds_handler = RotatingFileHandler('logs/cmd_audit.log',maxBytes=2000, backupCount=5)
 creds_handler.setFormatter(format)
 creds_logger.addHandler(creds_handler)
 
